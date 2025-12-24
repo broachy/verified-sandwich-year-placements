@@ -1,0 +1,31 @@
+name: Weekly Placement Verification
+
+on:
+  schedule:
+    - cron: "0 3 * * 1"  # Every Monday at 3am
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run verifier
+        run: python scripts/check_jobs.py
+
+      - name: Commit updates
+        run: |
+          git config --global user.name "Placement Bot"
+          git config --global user.email "bot@github.com"
+          git add data/jobs.json
+          git commit -m "Auto-verify placements" || echo "No changes"
+          git push
