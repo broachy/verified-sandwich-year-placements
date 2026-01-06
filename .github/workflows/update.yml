@@ -17,7 +17,8 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        - run: pip install requests feedparser
+  run: |
+    pip install requests feedparser
 
       - name: Run verifier
         run: python scripts/check_jobs.py
