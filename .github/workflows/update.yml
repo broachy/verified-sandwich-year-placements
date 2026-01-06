@@ -18,7 +18,9 @@ jobs:
 
       - name: Install dependencies
   run: |
-    pip install requests feedparser
+    python -m pip install --upgrade pip
+    pip install requests
+    pip install feedparser
 
       - name: Run verifier
         run: python scripts/check_jobs.py
